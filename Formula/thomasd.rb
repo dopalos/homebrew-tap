@@ -1,17 +1,15 @@
 ﻿class Thomasd < Formula
-  desc "ThomasD CLI"
+  desc "Thomas Chain daemon"
   homepage "https://github.com/dopalos/thomasd"
-  license "MIT"
-  version "0.1.20"
+  version "0.1.24"
 
   on_macos do
-    on_intel do
-      url "https://github.com/dopalos/thomasd/releases/download/v0.1.20/thomasd_v0.1.20_darwin_amd64.tar.gz"
-      sha256 "45cf4261c7d4d919b2aa1576a8965176cbb6ab801b77503151f431995b8862f7"
-    end
-    on_arm do
-      url "https://github.com/dopalos/thomasd/releases/download/v0.1.20/thomasd_v0.1.20_darwin_arm64.tar.gz"
-      sha256 "49205f854c9011427ac295b3fa790005a6f07180b82d3b28058153014d68461a"
+    if Hardware::CPU.arm?
+      url "https://github.com/dopalos/thomasd/releases/download/v0.1.24/thomasd_v0.1.24_darwin_arm64.tar.gz"
+      sha256 "d7655cd87b7d3174d2c367a919f52497b48d750088d88163a16b8224bb72a384"
+    else
+      url "https://github.com/dopalos/thomasd/releases/download/v0.1.24/thomasd_v0.1.24_darwin_amd64.tar.gz"
+      sha256 "5b1a07f45ec86c6de6e101fcdf8b79c2ac3bed287d868eb92e780c8636a195ad"
     end
   end
 
@@ -20,6 +18,6 @@
   end
 
   test do
-    system "#{bin}/thomasd", "--version"
+    assert_match version.to_s, shell_output("\#{bin}/thomasd -v")
   end
 end
